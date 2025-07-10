@@ -14,6 +14,7 @@ export const baseApi = createApi({
         }),
         getBookById: builder.query({
             query: (id) => `/books/${id}`,
+            providesTags: ["Books"]
         }),
         addBook: builder.mutation({
             

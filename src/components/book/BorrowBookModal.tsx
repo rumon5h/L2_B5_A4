@@ -17,7 +17,6 @@ interface BorrowBookModalProps {
 }
 
 const BorrowBookModal = ({ id }: BorrowBookModalProps) => {
-    console.log(id)
     const [open, setOpen] = useState(false);
     const form = useForm();
     type BorrowBookResponse = { success: boolean; [key: string]: any };
@@ -26,7 +25,6 @@ const BorrowBookModal = ({ id }: BorrowBookModalProps) => {
 
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        console.log(data)
 
         if (id && data?.quantity && data?.dueDate) {
             const borrowBook = {

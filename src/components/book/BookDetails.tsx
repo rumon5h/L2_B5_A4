@@ -2,7 +2,6 @@ import { useParams } from "react-router";
 import BorrowBookModal from "./BorrowBookModal";
 import { useGetBookByIdQuery } from "@/redux/api/baseApi";
 import Loading from "../Loading";
-import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 
 const BookDetails = () => {
@@ -10,12 +9,10 @@ const BookDetails = () => {
 
     const {data,isLoading} = useGetBookByIdQuery(id);
 
-    console.log(data)
-
+    
     if(isLoading){
         return <Loading/>
     }
-
     
 
     return (
