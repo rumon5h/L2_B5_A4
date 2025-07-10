@@ -2,15 +2,12 @@ import Loading from '@/components/Loading';
 import { Button } from '@/components/ui/button';
 import { useGetBooksQuery } from '@/redux/api/baseApi';
 import type { IBook } from '@/types';
-import React from 'react';
 import { Link } from 'react-router';
 
 
 
 const ManageBooks = () => {
-  const { data, isLoading, isError } = useGetBooksQuery(undefined);
-  console.log(data)
-
+  const { data, isLoading } = useGetBooksQuery(undefined);
 
   if (isLoading) {
     return <Loading />

@@ -68,7 +68,7 @@ const data = [
 
 const BorrowBooks = () => {
     return (
-        <div className='h-screen'>
+        <div className='h-screen px-5'>
             <h2 className='text-center text-3xl mt-10 mb-1'>Borrow Books Summary</h2>
 
 

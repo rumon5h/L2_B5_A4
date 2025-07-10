@@ -6,4 +6,5 @@ export interface IBook{
     isbn: string;
     copies: number;
     available: boolean;
+    description: string
 }
