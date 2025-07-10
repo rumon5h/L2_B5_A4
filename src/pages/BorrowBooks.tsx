@@ -26,7 +26,7 @@ const BorrowBooks = () => {
                     </tr>
                 </thead>  
                 <tbody className=''>
-                    {data.success && data?.data?.map((item:iBorrow, index: number) => (
+                    {data?.success && data?.data?.map((item:iBorrow, index: number) => (
                         <tr className='border-b border-r-2 border-gray-200' key={index}>
                             <td className='border-r-2 border-gray-200 py-3 pl-2'>{index+1}</td>
                             <td className='border-r-2 border-gray-200 py-3 pl-2'>{item.book.title}</td>

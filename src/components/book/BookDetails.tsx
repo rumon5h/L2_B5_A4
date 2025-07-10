@@ -16,8 +16,8 @@ const BookDetails = () => {
     
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
-            <div className="w-[300px] md:w-[400px] lg:w-[500px] mx-auto mt-10">
+        <div className="flex flex-col items-center justify-center min-h-screen">
+            <div className="w-[300px] md:w-[400px] lg:w-[500px] mx-auto mt-10 py-4">
             <h4>Book Details</h4>
             <p><strong>Title:</strong> {data?.data?.title}</p>
             <p><strong>Author:</strong> {data?.data?.author}</p>

@@ -1,7 +1,6 @@
 import { Outlet } from "react-router"
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import React from 'react';
 import { Toaster } from "react-hot-toast";
 
 function App() {
