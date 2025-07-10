@@ -22,6 +22,7 @@ const BookDetails = () => {
             <p><strong>Description:</strong> {book.description}</p>
             <p><strong>Copies:</strong> {book.copies}</p>
             <p><strong>Available:</strong> {book.available ? "Yes" : "No"}</p>
+            <button className='bg-blue-500 text-white rounded-lg px-4 text-[14px] py-2 mt-4 hover:bg-blue-600'>Borrow Book</button>
         </div>
         </div>
     );
