@@ -1,3 +1,6 @@
+import Loading from '@/components/Loading';
+import { useGetBorrowBooksQuery } from '@/redux/api/baseApi';
+import type { iBorrow } from '@/types';
 import React from 'react';
 
 const data = [
@@ -67,6 +70,13 @@ const data = [
 ]
 
 const BorrowBooks = () => {
+    const {data, isLoading} = useGetBorrowBooksQuery(undefined);
+
+    if(isLoading){
+        return <Loading/>
+    }
+
+    console.log(data)
     return (
         <div className='h-screen px-5'>
             <h2 className='text-center text-3xl mt-10 mb-1'>Borrow Books Summary</h2>
@@ -83,7 +93,7 @@ const BorrowBooks = () => {
                     </tr>
                 </thead>  
                 <tbody className=''>
-                    {data.map((item, index) => (
+                    {data.success && data?.data?.map((item:iBorrow, index: number) => (
                         <tr className='border-b border-r-2 border-gray-200' key={index}>
                             <td className='border-r-2 border-gray-200 py-3 pl-2'>{index+1}</td>
                             <td className='border-r-2 border-gray-200 py-3 pl-2'>{item.book.title}</td>

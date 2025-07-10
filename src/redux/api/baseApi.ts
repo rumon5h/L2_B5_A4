@@ -39,6 +39,11 @@ export const baseApi = createApi({
             }),
             invalidatesTags: ["Books"]
         }),
+
+        getBorrowBooks: builder.query({
+            query: () => '/borrow',
+            providesTags: ["Books"]
+        })
     }),
 });
 
@@ -48,4 +53,5 @@ export const {
     useAddBookMutation,
     useUpdateBookMutation,
     useDeleteBookMutation,
+    useGetBorrowBooksQuery
 } = baseApi;
