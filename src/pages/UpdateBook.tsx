@@ -14,7 +14,7 @@ const UpdateBook = () => {
     const { id } = useParams<{ id: string }>();
     const [updateBook] = useUpdateBookMutation();
     const navigate = useNavigate();
-    const {data: book, isLoading} = useGetBookByIdQuery(id || "");
+    const {data: book, isLoading} = useGetBookByIdQuery(id);
     const form = useForm();
 
     if(isLoading){
@@ -22,7 +22,6 @@ const UpdateBook = () => {
     }
 
     const onSubmit: SubmitHandler<FieldValues> = async(data) => {
-        console.log("Form submitted with data:", data);
 
        const updated = await updateBook({ id: book.data._id, ...data });
 
@@ -30,6 +29,7 @@ const UpdateBook = () => {
             toast.error("Failed to update book.", { id: "form-error" });
         } else if (updated.data?.success) {
             toast.success("Book updated successfully!", { id: "form-success" });
+            form.reset();
             navigate("/manage-books");
         }
         form.reset();
