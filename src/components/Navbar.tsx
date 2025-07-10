@@ -9,7 +9,7 @@ const Navbar = () => {
             <div className='flex space-x-4'>
                 <Link to={"/add-book"}>Add Book</Link>
                 <Link to={"/all-books"}>All Books</Link>
-                <Link to={"/borrow-summary"}>Borrow Summary</Link>
+                <Link to={"/borrow-book"}>Borrow Summary</Link>
             </div>
             <ModeToggle />
         </div>
