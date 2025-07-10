@@ -16,14 +16,14 @@ const UpdateBook = () => {
     const navigate = useNavigate();
     const {data: book, isLoading} = useGetBookByIdQuery(id);
     const form = useForm();
-
+console.log(book)
     if(isLoading){
         return <Loading />
     }
 
     const onSubmit: SubmitHandler<FieldValues> = async(data) => {
 
-       const updated = await updateBook({ id: book.data._id, ...data });
+       const updated = await updateBook({ id: book?.data?._id, ...data });
 
         if (updated.error) {
             toast.error("Failed to update book.", { id: "form-error" });
@@ -47,7 +47,7 @@ const UpdateBook = () => {
                             <FormItem>
                                 <FormLabel>Title</FormLabel>
                                 <FormControl>
-                                    <Input  {...field} value={field.value || book.data.title} />
+                                    <Input  {...field} value={field.value || book?.data?.title} />
                                 </FormControl>
 
                             </FormItem>
@@ -60,7 +60,7 @@ const UpdateBook = () => {
                             <FormItem>
                                 <FormLabel>Author</FormLabel>
                                 <FormControl>
-                                    <Input  {...field} value={field.value || book.data.author} />
+                                    <Input  {...field} value={field.value || book?.data?.author} />
                                 </FormControl>
 
                             </FormItem>
@@ -74,7 +74,7 @@ const UpdateBook = () => {
                             <FormItem>
                                 <FormLabel>Description</FormLabel>
                                 <FormControl>
-                                    <Input  {...field} value={field.value || book.data.description} />
+                                    <Input  {...field} value={field.value || book?.data?.description} />
                                 </FormControl>
 
                             </FormItem>
@@ -88,7 +88,7 @@ const UpdateBook = () => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel >Genre</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value || book.data.genre}>
+                                <Select onValueChange={field.onChange} defaultValue={field.value || book?.data?.genre}>
                                     <FormControl>
                                         <SelectTrigger className='w-full'>
                                             <SelectValue placeholder="Select a Genre" />
@@ -115,7 +115,7 @@ const UpdateBook = () => {
                             <FormItem>
                                 <FormLabel>ISBN</FormLabel>
                                 <FormControl>
-                                    <Input  {...field} value={field.value || book.data.isbn} />
+                                    <Input  {...field} value={field.value || book?.data?.isbn} />
                                 </FormControl>
 
                             </FormItem>
@@ -128,7 +128,7 @@ const UpdateBook = () => {
                             <FormItem>
                                 <FormLabel>Copies</FormLabel>
                                 <FormControl>
-                                    <Input type="number" {...field} value={field.value || book.data.copies} />
+                                    <Input type="number" {...field} value={field.value || book?.data?.copies} />
                                 </FormControl>
 
                             </FormItem>

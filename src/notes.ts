@@ -1,1 +1,0 @@
-// update book 0 copies available status
