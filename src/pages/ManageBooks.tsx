@@ -1,26 +1,37 @@
 import Loading from '@/components/Loading';
 import { Button } from '@/components/ui/button';
-import { useGetBooksQuery } from '@/redux/api/baseApi';
+import { useDeleteBookMutation, useGetBooksQuery } from '@/redux/api/baseApi';
 import type { IBook } from '@/types';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router';
 
 
 
 const ManageBooks = () => {
   const { data, isLoading } = useGetBooksQuery(undefined);
+  const [deleteBook] = useDeleteBookMutation();
   
+
 
   if (isLoading) {
     return <Loading />
   }
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async(id: string) => {
     const deleteConfirmed = window.confirm("Are you sure you want to delete this book?");
 
     if (deleteConfirmed) {
-      // Here you would typically make an API call to delete the book
-      console.log(`Book with ID ${id} deleted`);
-      // After deletion, you might want to refresh the book list or update the state
+      const deleted = await deleteBook(id);
+      if (deleted.error) {
+        toast.error("Failed to delete book.");
+      }
+      else if (deleted.data?.success) {
+        toast.success("Book deleted successfully!");
+      }
+      else {
+        alert("Something went wrong. Please try again.");
+      }
+      // Optionally, you can refetch the books after deletion
     }
   }
   return (
@@ -54,7 +65,7 @@ const ManageBooks = () => {
                 <td className='border px-4 py-2'>{book.genre}</td>
                 <td className='border px-4 py-2'>{book.isbn}</td>
                 <td className='border px-4 py-2'>{book.copies}</td>
-                <td className='border px-4 py-2'>{book.available ? 'Yes' : 'No'}</td>
+                <td className='border px-4 py-2'>{book?.available ? 'Yes' : 'No'}</td>
                 <td className='border px-4 py-2'>
                   <Link to={`/manage-books/update-book/${book._id}`} className='text-blue-500 hover:underline'>Edit</Link> |
                   <Button onClick={() => handleDelete(book._id)} className='text-red-500 bg-transparent hover:bg-transparent ml-2 cursor-pointer'>Delete</Button>
