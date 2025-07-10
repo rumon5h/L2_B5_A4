@@ -3,6 +3,7 @@ import AddBook from "@/pages/AddBook";
 import AllBook from "@/pages/AllBook";
 import BorrowBooks from "@/pages/BorrowBooks";
 import Home from "@/pages/Home";
+import ManageBooks from "@/pages/ManageBooks";
 import NotFound from "@/pages/NotFound";
 import UpdateBook from "@/pages/UpdateBook";
 import { createBrowserRouter } from "react-router";
@@ -26,12 +27,16 @@ const router = createBrowserRouter([
                 Component: AddBook
             },
             {
-                path: "borrow-book",
+                path: "borrow-books",
                 Component: BorrowBooks
             },
             {
-                path: "update-book",
+                path: "/manage-books/update-book/:id",
                 Component: UpdateBook
+            },
+            {
+                path: "manage-books",
+                Component: ManageBooks
             },
             {
                 path: "*",

@@ -7,9 +7,9 @@ const Navbar = () => {
             <Link to={"/"}>Library</Link>
 
             <div className='flex space-x-4'>
-                <Link to={"/add-book"}>Add Book</Link>
                 <Link to={"/all-books"}>All Books</Link>
-                <Link to={"/borrow-book"}>Borrow Summary</Link>
+                <Link to={"/borrow-books"}>Borrow Summary</Link>
+                <Link to={"/manage-books"}>Manage Books</Link>
             </div>
             <ModeToggle />
         </div>
