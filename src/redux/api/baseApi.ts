@@ -10,6 +10,7 @@ export const baseApi = createApi({
     endpoints: (builder) => ({
         getBooks: builder.query({
             query: () => '/books',
+            
             providesTags: ["Books"]
         }),
         getBookById: builder.query({
