@@ -1,30 +1,39 @@
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import React, { useState } from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useAddBookMutation } from '@/redux/api/baseApi';
 import { useForm, type FieldValues, type SubmitHandler, } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
 
-
-const book = {
-    "_id": "685684ffae705cec1192253c",
-    "title": "The Theory of Everything 3",
-    "author": "Stephen Hawking 2",
-    "genre": "SCIENCE",
-    "isbn": "978055338016323",
-    "description": "An overview of cosmology and black holes. 2",
-    "copies": 5,
-    "available": true,
-}
 
 const AddBook = () => {
     const form = useForm();
+    const [createBook] = useAddBookMutation();
+    const navigate = useNavigate()
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        console.log("Form submitted with data:", data);
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 
+        if (!data.title || !data.author || !data.genre || !data.isbn || !data.description || !data.copies) {
+            toast.error("Please fill in all fields.", { id: "form-error" });
+            return;
+        } else {
+            const book = await createBook(data);
 
-        form.reset();
+            if (book.error) {
+                toast.error("Failed to add book.", { id: "form-error" });
+            } else if (book.data?.success) {
+                toast.success("Book added successfully!", { id: "form-success" });
+                navigate("/manage-books");
+            }
+
+            form.reset();
+        }
+
     }
+
+
 
     return (
         <div className="w-[300px] md:w-[400px] lg:w-[500px] mx-auto mt-10 h-screen">
@@ -78,10 +87,22 @@ const AddBook = () => {
                         name="genre"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Genre</FormLabel>
-                                <FormControl>
-                                    <Input  {...field} value={field.value || ""} />
-                                </FormControl>
+                                <FormLabel >Genre</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger className='w-full'>
+                                            <SelectValue placeholder="Select a Genre" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        <SelectItem value="FICTION">FICTION</SelectItem>
+                                        <SelectItem value="NON_FICTION">NON_FICTION</SelectItem>
+                                        <SelectItem value="SCIENCE">SCIENCE</SelectItem>
+                                        <SelectItem value="HISTORY">HISTORY</SelectItem>
+                                        <SelectItem value="BIOGRAPHY">BIOGRAPHY</SelectItem>
+                                        <SelectItem value="FANTASY">FANTASY</SelectItem>
+                                    </SelectContent>
+                                </Select>
 
                             </FormItem>
                         )}
@@ -113,7 +134,7 @@ const AddBook = () => {
                             </FormItem>
                         )}
                     />
-                    
+
                     <Button type="submit">Add Book</Button>
                 </form>
             </Form>

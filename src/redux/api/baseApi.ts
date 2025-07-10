@@ -16,7 +16,9 @@ export const baseApi = createApi({
             query: (id) => `/books/${id}`,
         }),
         addBook: builder.mutation({
+            
             query: (newBook) => ({
+                
                 url: '/books',
                 method: 'POST',
                 body: newBook,
