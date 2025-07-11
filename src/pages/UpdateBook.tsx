@@ -14,16 +14,26 @@ const UpdateBook = () => {
     const { id } = useParams<{ id: string }>();
     const [updateBook] = useUpdateBookMutation();
     const navigate = useNavigate();
-    const {data: book, isLoading} = useGetBookByIdQuery(id);
+    const { data: book, isLoading } = useGetBookByIdQuery(id);
     const form = useForm();
-console.log(book)
-    if(isLoading){
-        return <Loading />
+    if (isLoading) {
+        return <Loading />
     }
 
-    const onSubmit: SubmitHandler<FieldValues> = async(data) => {
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 
-       const updated = await updateBook({ id: book?.data?._id, ...data });
+        const finalData = {
+            title: data?.title || book?.data?.title,
+            author: data?.author || book?.data?.author,
+            copies: data.copies || book?.data?.copies,
+            description: data?.description || book?.data?.description,
+            genre: data?.genre || book?.data?.genre,
+            isbn: data?.isbn || book?.data?.isbn
+
+        }
+
+
+        const updated = await updateBook({ id: book?.data?._id, ...finalData });
 
         if (updated.error) {
             toast.error("Failed to update book.", { id: "form-error" });
@@ -32,7 +42,6 @@ console.log(book)
             form.reset();
             navigate("/manage-books");
         }
-        form.reset();
     }
 
     return (
@@ -47,7 +56,7 @@ console.log(book)
                             <FormItem>
                                 <FormLabel>Title</FormLabel>
                                 <FormControl>
-                                    <Input  {...field} value={field.value || book?.data?.title} />
+                                    <Input  {...field} value={field?.value ? field.value : book?.data?.title} />
                                 </FormControl>
 
                             </FormItem>
@@ -60,7 +69,7 @@ console.log(book)
                             <FormItem>
                                 <FormLabel>Author</FormLabel>
                                 <FormControl>
-                                    <Input  {...field} value={field.value || book?.data?.author} />
+                                    <Input  {...field} value={field?.value ? field.value : book?.data?.author} />
                                 </FormControl>
 
                             </FormItem>
@@ -74,7 +83,7 @@ console.log(book)
                             <FormItem>
                                 <FormLabel>Description</FormLabel>
                                 <FormControl>
-                                    <Input  {...field} value={field.value || book?.data?.description} />
+                                    <Input  {...field} value={field?.value ? field.value : book?.data?.description} />
                                 </FormControl>
 
                             </FormItem>
@@ -88,7 +97,7 @@ console.log(book)
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel >Genre</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value || book?.data?.genre}>
+                                <Select onValueChange={field.onChange} defaultValue={field?.value ? field.value : book?.data?.genre}>
                                     <FormControl>
                                         <SelectTrigger className='w-full'>
                                             <SelectValue placeholder="Select a Genre" />
@@ -115,7 +124,7 @@ console.log(book)
                             <FormItem>
                                 <FormLabel>ISBN</FormLabel>
                                 <FormControl>
-                                    <Input  {...field} value={field.value || book?.data?.isbn} />
+                                    <Input  {...field} value={field?.value ? field.value : book?.data?.isbn} />
                                 </FormControl>
 
                             </FormItem>
@@ -128,14 +137,14 @@ console.log(book)
                             <FormItem>
                                 <FormLabel>Copies</FormLabel>
                                 <FormControl>
-                                    <Input type="number" {...field} value={field.value || book?.data?.copies} />
+                                    <Input type="number" {...field} value={field?.value ? field.value : book?.data?.copies} />
                                 </FormControl>
 
                             </FormItem>
                         )}
                     />
-                    
-                    <Button type="submit">Add Book</Button>
+
+                    <Button type="submit">Update Book</Button>
                 </form>
             </Form>
         </div>
